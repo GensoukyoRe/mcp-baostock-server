@@ -1,4 +1,5 @@
 # MCP BaoStock Server
+[![Trust Score](https://archestra.ai/mcp-catalog/api/badge/quality/HuggingAGI/mcp-baostock-server)](https://archestra.ai/mcp-catalog/huggingagi__mcp-baostock-server)
 
 一个基于BaoStock的股票数据服务器，提供了多个接口用于获取股票市场数据。
 
