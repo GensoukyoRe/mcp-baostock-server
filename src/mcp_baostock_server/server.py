@@ -87,33 +87,5 @@ async def get_valuation_info(code: str, start_date: str, end_date: str, frequenc
     return data
 
 
-async def run_server():
-    """运行 MCP BaoStock 服务器"""
-    logger.info("正在初始化 BaoStock 服务器...")
-    try:
-        # 启动 MCP 服务器
-        logger.info("正在启动 MCP BaoStock 服务器...")
-        await mcp.run()
-    except KeyboardInterrupt:
-        logger.info("Server stopped by user")
-        await mcp.shutdown()
-    except Exception as e:
-        logger.error(f"Server failed: {e}")
-        raise
-    finally:
-        logger.info("Server shutdown complete") 
-
 def main():
-    """Start the BaoStock MCP server."""
-    try:
-        print("BaoStock MCP Server")
-        print("Starting server... Press Ctrl+C to exit")
-        asyncio.run(run_server())
-    except KeyboardInterrupt:
-        print("\nShutting down server...")
-    except Exception as e:
-        print(f"\nError: {e}")
-        import traceback
-        traceback.print_exc()
-    finally:
-        print("Server stopped.")
+    mcp.run()   # mcp.run() 自己管理事件循环，直接调用
