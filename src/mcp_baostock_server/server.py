@@ -20,11 +20,9 @@ logger = logging.getLogger("mcp-baostock")
 # 初始化 FastMCP 服务器
 mcp = FastMCP(
     "mcp-baostock",
-    version="0.1.0",
-    description="MCP BaoStock Server for stock data",
+    instructions="MCP BaoStock Server for stock data",
     dependencies=["baostock"],
-    env_vars={},
-    debug=True  # 启用debug模式
+    debug=True
 )
 
 stock_api = BaoStockAPI()
