@@ -22,7 +22,9 @@ mcp = FastMCP(
     "mcp-baostock",
     instructions="MCP BaoStock Server for stock data",
     dependencies=["baostock"],
-    debug=True
+    debug=True,
+    host="0.0.0.0",   # ← 在这里配置
+    port=8700         # ← 在这里配置
 )
 
 stock_api = BaoStockAPI()
@@ -87,10 +89,9 @@ async def get_valuation_info(code: str, start_date: str, end_date: str, frequenc
     return data
 
 async def run_both():
-    """同时运行 stdio 和 SSE/HTTP 两种模式"""
     tasks = [
         asyncio.create_task(mcp.run_stdio_async()),
-        asyncio.create_task(mcp.run_sse_async(host="0.0.0.0", port=8700)),
+        asyncio.create_task(mcp.run_sse_async()),   # 不传参数
     ]
     logger.info("MCP BaoStock 已启动：stdio + SSE http://0.0.0.0:8700/sse")
     done, pending = await asyncio.wait(tasks, return_when=asyncio.FIRST_COMPLETED)
