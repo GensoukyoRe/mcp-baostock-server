@@ -93,7 +93,7 @@ async def run_server():
     try:
         # 启动 MCP 服务器
         logger.info("正在启动 MCP BaoStock 服务器...")
-        await mcp.run_sse_async()
+        await mcp.run()
     except KeyboardInterrupt:
         logger.info("Server stopped by user")
         await mcp.shutdown()
