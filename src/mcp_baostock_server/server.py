@@ -86,6 +86,21 @@ async def get_valuation_info(code: str, start_date: str, end_date: str, frequenc
     data = stock_api.get_valuation_data(code, start_date, end_date, frequency)
     return data
 
+async def run_both():
+    """同时运行 stdio 和 SSE/HTTP 两种模式"""
+    tasks = [
+        asyncio.create_task(mcp.run_stdio_async()),
+        asyncio.create_task(mcp.run_sse_async(host="0.0.0.0", port=8700)),
+    ]
+    logger.info("MCP BaoStock 已启动：stdio + SSE http://0.0.0.0:8700/sse")
+    done, pending = await asyncio.wait(tasks, return_when=asyncio.FIRST_COMPLETED)
+    for task in pending:
+        task.cancel()
+        try:
+            await task
+        except asyncio.CancelledError:
+            pass
+    logger.info("MCP BaoStock 已关闭")
 
 def main():
-    mcp.run()   # mcp.run() 自己管理事件循环，直接调用
+    asyncio.run(run_both())
